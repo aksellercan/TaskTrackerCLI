@@ -19,6 +19,7 @@ void task_update_task(const unsigned long taskid, const char *description);
 void task_sort_task_by_completed();
 void task_sort_task_by_in_progress();
 void task_sort_task_by_todo();
+void task_sort_by_status(const char *status);
 void task_mark_task_status(unsigned long taskid, const char *status);
 void task_list_tasks();
 void task_free_tasks();

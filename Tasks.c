@@ -175,6 +175,29 @@ void task_list_tasks()
     }
 }
 
+void task_sort_by_status(const char *status)
+{
+    if (taskList == NULL)
+    {
+        printf("No tasks found\n");
+        return;
+    }
+    int listLength = 0;
+    for (int i = 0; i < arrayLength; i++)
+    {
+        Task *task = &taskList[i];
+        if (compareStrings(task->status, status))
+        {
+            _task_print_tasks(task);
+            listLength++;
+        }
+    }
+    if (listLength == 0)
+    {
+        printf("No tasks found\n");
+    }
+}
+
 void task_sort_task_by_completed()
 {
     if (taskList == NULL)

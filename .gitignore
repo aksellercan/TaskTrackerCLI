@@ -5,3 +5,7 @@
 data.json
 TaskTrackerCLI.exe
 TaskTrackerCLI
+out/
+out/*
+.DS_Store
+

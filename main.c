@@ -6,7 +6,7 @@
 #include "Tasks.h"
 #include "String/String.h"
 
-char* version = "v3.2";
+char *version = "v3.8";
 
 void _main_add_Option(const char *description)
 {
@@ -66,17 +66,41 @@ int main(int argc, char *argv[])
             }
             if (compareStrings(argv[1], "list"))
             {
+                int statusValue = atoi(argv[2]);
                 if (compareStrings(argv[2], "todo"))
                 {
-                    task_sort_task_by_todo();
+                    statusValue = 4;
+                    task_sort_by_status("todo");
                 }
                 if (compareStrings(argv[2], "in-progress"))
                 {
-                    task_sort_task_by_in_progress();
+                    statusValue = 4;
+                    task_sort_by_status("in-progress");
                 }
                 if (compareStrings(argv[2], "done"))
                 {
-                    task_sort_task_by_completed();
+                    statusValue = 4;
+                    task_sort_by_status("done");
+                }
+                if (compareStrings(argv[2], "hold"))
+                {
+                    statusValue = 4;
+                    task_sort_by_status("hold");
+                }
+                switch (statusValue)
+                {
+                case 0:
+                    task_sort_by_status("todo");
+                    break;
+                case 1:
+                    task_sort_by_status("in-progress");
+                    break;
+                case 2:
+                    task_sort_by_status("done");
+                    break;
+                case 3:
+                    task_sort_by_status("hold");
+                    break;
                 }
             }
             if (compareStrings(argv[1], "mark-todo"))
@@ -94,6 +118,11 @@ int main(int argc, char *argv[])
                 const int intValue = atoi(argv[2]);
                 task_mark_task_status(intValue, "done");
             }
+            if (compareStrings(argv[1], "mark-hold"))
+            {
+                const int intValue = atoi(argv[2]);
+                task_mark_task_status(intValue, "hold");
+            }
         }
 
         if (argc == 4)
@@ -102,6 +131,26 @@ int main(int argc, char *argv[])
             {
                 int intValue = atoi(argv[2]);
                 task_update_task(intValue, argv[3]);
+            }
+            if (compareStrings(argv[1], "mark"))
+            {
+                int statusValue = atoi(argv[2]);
+                int intValue = atoi(argv[3]);
+                switch (statusValue)
+                {
+                case 1:
+                    task_mark_task_status(intValue, "in-progress");
+                    break;
+                case 2:
+                    task_mark_task_status(intValue, "done");
+                    break;
+                case 3:
+                    task_mark_task_status(intValue, "hold");
+                    break;
+                default:
+                    task_mark_task_status(intValue, "todo");
+                    break;
+                }
             }
         }
 
@@ -131,7 +180,8 @@ int main(int argc, char *argv[])
             {
                 _main_help();
             }
-            if (compareStrings(argv[1], "version")) {
+            if (compareStrings(argv[1], "version"))
+            {
                 printf("%s\n", version);
             }
         }
